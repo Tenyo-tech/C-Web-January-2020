@@ -11,11 +11,13 @@ namespace DemoApp
     {
         public static async Task Main()
         {
+            var db = new ApplicationDbContext();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
             var routeTable = new List<Route>();
             routeTable.Add(new Route(HttpMethodType.Get, "/", Index));
-            routeTable.Add(new Route(HttpMethodType.Get, "/users/login", Login));
-            routeTable.Add(new Route(HttpMethodType.Post, "/users/login", DoLogin));
-            routeTable.Add(new Route(HttpMethodType.Get, "/contact", Contact));
+            routeTable.Add(new Route(HttpMethodType.Post, "/Tweets/Create", CreateTweet));
             routeTable.Add(new Route(HttpMethodType.Get, "/favicon.ico", FavIcon));
             
             var httpServer = new HttpServer(80, routeTable);
@@ -30,26 +32,25 @@ namespace DemoApp
             return new FileResponse(byteContent, "image/x-icon");
         }
 
-        private static HttpResponse Contact(HttpRequest request)
-        {
-            return new HtmlResponse("<h1>contact</h1>");
-        }
-
         public static HttpResponse Index(HttpRequest request)
         {
             var username = request.SessionData.ContainsKey("Username") ? request.SessionData["Username"] : "Anonymous";
-            return new HtmlResponse($"<h1>Home page. Hello, {username}</h1><img src='/images/img.jpeg' /><a href='/users/login/'>Go to login</a>");
+            return new HtmlResponse($"<form action ='/Tweets/Create' method = 'post'><input name ='creator' /><br /><textarea name='tweetName'></textarea><br /><input type='submit' /></form>");
         }
 
-        public static HttpResponse Login(HttpRequest request)
-        {
-            request.SessionData["Username"] = "Pesho";
-            return new HtmlResponse("<h1>login page</h1>");
-        }
 
-        public static HttpResponse DoLogin(HttpRequest request)
+        public static HttpResponse CreateTweet(HttpRequest request)
         {
-            return new HtmlResponse("<h1>login page form</h1>");
+            var db = new ApplicationDbContext();
+            var entityEntry = db.Tweets.Add(new Tweet
+            {
+                CreatedOn = DateTime.UtcNow,
+                Creator = request.FormData["creator"],
+                Content = request.FormData["tweetName"]
+            });
+            db.SaveChanges();
+
+            return  new HtmlResponse("Thank you for your tweet!");
         }
     }
 }
