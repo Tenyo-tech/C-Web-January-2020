@@ -3,6 +3,8 @@ using SIS.HTTP.Response;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DemoApp
@@ -12,7 +14,6 @@ namespace DemoApp
         public static async Task Main()
         {
             var db = new ApplicationDbContext();
-            db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
             var routeTable = new List<Route>();
@@ -35,6 +36,17 @@ namespace DemoApp
         public static HttpResponse Index(HttpRequest request)
         {
             var username = request.SessionData.ContainsKey("Username") ? request.SessionData["Username"] : "Anonymous";
+
+            var db = new ApplicationDbContext();
+            var tweets = db.Tweets.Select(x => new
+            {
+                x.CreatedOn,
+                x.Creator,
+                x.Content
+            }).ToList();
+            StringBuilder html = new StringBuilder();
+            html.Append("<table><tr><th><>");
+
             return new HtmlResponse($"<form action ='/Tweets/Create' method = 'post'><input name ='creator' /><br /><textarea name='tweetName'></textarea><br /><input type='submit' /></form>");
         }
 
@@ -50,7 +62,7 @@ namespace DemoApp
             });
             db.SaveChanges();
 
-            return  new HtmlResponse("Thank you for your tweet!");
+            return  new RedirectResponse("/");
         }
     }
 }
