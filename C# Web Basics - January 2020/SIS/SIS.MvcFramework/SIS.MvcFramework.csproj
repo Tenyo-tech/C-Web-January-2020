@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="SIS.MvcFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SIS.HTTP\SIS.HTTP.csproj" />
   </ItemGroup>
 
