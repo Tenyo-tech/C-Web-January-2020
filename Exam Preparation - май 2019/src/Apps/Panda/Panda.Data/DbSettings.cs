@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Panda.Data
+﻿namespace Panda.Data
 {
     public static class DbSettings
     {
-        public const string ConnectionString = @"Integrated Security=True;Server=.;Database=Panda";
+        public static string ConnectionString =
+            @"Server=DESKTOP-QK1M4A0\SQLEXPRESS;
+            Database=Panda;
+            Trusted_Connection=True";
     }
 }

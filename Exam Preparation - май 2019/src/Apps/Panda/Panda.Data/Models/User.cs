@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Panda.Data.Models
 {
@@ -10,25 +9,23 @@ namespace Panda.Data.Models
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Packages = new HashSet<Package>();
-            this.Receipts = new HashSet<Receipt>();
         }
-
         public string Id { get; set; }
 
+        [MinLength(5), MaxLength(20)]
         [Required]
-        [MaxLength(20)]
         public string Username { get; set; }
 
+        [MinLength(5), MaxLength(20)]
+        [EmailAddress]
         [Required]
-        [MaxLength(20)]
         public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }
 
-        public virtual ICollection<Package> Packages { get; set; }
+        public virtual ICollection<Package> Packages { get; set; } = new HashSet<Package>();
 
-        public virtual ICollection<Receipt> Receipts { get; set; }
+        public virtual ICollection<Receipt> Receipts { get; set; } = new HashSet<Receipt>();
     }
 }

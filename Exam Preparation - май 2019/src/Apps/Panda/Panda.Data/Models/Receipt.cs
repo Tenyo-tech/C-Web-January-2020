@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Panda.Data.Models
 {
@@ -11,7 +9,6 @@ namespace Panda.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
         }
-
         public string Id { get; set; }
 
         public decimal Fee { get; set; }
@@ -23,7 +20,7 @@ namespace Panda.Data.Models
 
         public virtual User Recipient { get; set; }
 
-        [Required]
+        [Required] 
         public string PackageId { get; set; }
 
         public virtual Package Package { get; set; }
