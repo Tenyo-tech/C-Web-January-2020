@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
 using System.Threading;
@@ -36,6 +37,12 @@ namespace Panda.Services
             var passwordHash = this.HashPassword(password);
             var user = this.db.Users.FirstOrDefault(x => x.Username == username && x.Password == passwordHash);
             return user;
+        }
+
+        public IEnumerable<string> GetUserNames()
+        {
+            var userNames =this.db.Users.Select(x => x.Username).ToList();
+            return userNames;
         }
 
         private string HashPassword(string password)
