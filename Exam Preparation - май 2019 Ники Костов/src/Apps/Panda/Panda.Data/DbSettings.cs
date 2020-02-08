@@ -6,6 +6,6 @@ namespace Panda.Data
 {
     public static class DbSettings
     {
-        public const string ConnectionString = @"Integrated Security=True;Server=.;Database=Panda";
+        public const string ConnectionString = @"Server=DESKTOP-QK1M4A0\SQLEXPRESS;Database=Panda;Integrated Security=True;";
     }
 }
