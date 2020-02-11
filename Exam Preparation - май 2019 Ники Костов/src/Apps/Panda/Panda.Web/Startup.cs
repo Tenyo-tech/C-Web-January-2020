@@ -19,8 +19,8 @@ namespace Panda.Web
         public void ConfigureServices(IServiceProvider serviceProvider)
         {
             serviceProvider.Add<IUsersService, UsersService>();
-            //serviceProvider.Add<IPackagesService, PackagesService>();
-            //serviceProvider.Add<IReceiptsService, ReceiptsService>();
+            serviceProvider.Add<IPackagesService, PackagesService>();
+            serviceProvider.Add<IReceiptsService, ReceiptsService>();
         }
     }
 }
