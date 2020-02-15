@@ -6,7 +6,7 @@
             <h1 class="text-center">Album Name: @Model.Name</h1>
             <h1 class="text-center">Album Price: $@Model.Price</h1>
             <div class="d-flex justify-content-between">
-                <a class="btn bg-success text-white" href="/Tracks/Create?albumId=Id">Create Track</a>
+                <a class="btn bg-success text-white" href="/Tracks/Create?albumId=@Model.Id">Create Track</a>
                 <a class="btn bg-success text-white" href="/Albums/All">Back To All</a>
             </div>
         </div>
@@ -15,10 +15,10 @@
             <ul>
                 @for(int i = 0; i < Model.Tracks.Count(); i++)
                 { var track = Model.Tracks.ToList()[i];
-                <li>
-                    <strong>@(i+1)</strong>.
-                    <a href="/Tracks/Details?albumId=@Model.Id&trackId=@track.Id">@track.Name</a>
-                </li>
+                    <li>
+                        <strong>@(i+1)</strong>.
+                        <a href="/Tracks/Details?albumId=@Model.Id&trackId=@track.Id">@track.Name</a>
+                    </li>
                 }
             </ul>
         </div>
